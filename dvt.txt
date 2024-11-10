@@ -1,0 +1,81 @@
+EXP-6 
+import numpy as np
+
+def haar_wavelet_transform(data):
+    n = len(data)
+    output = np.copy(data)
+    step = 1
+
+    while step < n:
+        for i in range(0, n, 2 * step):
+            for j in range(step):
+                avg = (output[i + j] + output[i + j + step]) / 2
+                diff = (output[i + j] - output[i + j + step]) / 2
+                output[i + j] = avg
+                output[i + j + step] = diff
+        step *= 2
+       
+    return output
+
+data = [4, 6, 10, 12, 14, 16, 18, 20]
+--------------------------------------------------
+EX-9
+from sklearn.cluster import AgglomerativeClustering
+import matplotlib.pyplot as plt
+import scipy.cluster.hierarchy as sch
+data = in_data.X
+
+plt.figure(figsize=(10, 7))
+
+dendrogram = sch.dendrogram(sch.linkage(data, method='ward'))
+plt.show()
+
+hc = AgglomerativeClustering(n_clusters=5, affinity='euclidean', linkage='ward')
+
+cluster_labels = hc.fit_predict(data)
+
+out_data = in_data.copy()
+
+out_data.Y = cluster_labels
+--------------------------------------------------
+EXP-10
+import pandas as pd
+df = pd.DataFrame(in_data.X, columns=[var.name for var in in_data.domain.attributes])
+basket = df.applymap(lambda x: True if x > 0 else False)
+frequent_itemsets = basket.sum().sort_values(ascending=False)
+print(frequent_itemsets)
+out_data = in_data
+--------------------------------------------------
+EXP-8
+1) normal
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+data = np.random.normal(10.0, 3, 500)
+sns.displot(data, kde= True, bins=10, color="black")
+---------------------------------------------------
+2)bi-model
+N=400
+mu_1, sigma_1 = 80, 10
+mu_2, sigma_2 = 20, 10
+X_1 = np.random.normal(mu_1, sigma_1, N)
+X_2 = np.random.normal(mu_2, sigma_2, N)
+X = np.concatenate([X_1, X_2])
+sns.displot(X,bins=10,kde=True , color="green")
+---------------------------------------------------
+3)right-skewed
+X_1 = np.random.normal(mu_1, sigma_1, N)
+X_2 = np.random.normal(mu_2, sigma_2, N)
+X = np.concatenate([X_1, X_2])
+sns.displot(X,bins=10,kde=True , color="blue")
+---------------------------------------------------
+4)left-skewed
+ldata = [0]* 19 + [-1]49 + [-2]*60 + [-3] *47 + [-4]*32 + [-5] 18+[-6]*3 + [-7]*3 + [-8]
+sns.displot(ldata, kde = True,bins=8, alpha=0.6,
+color="red")
+---------------------------------------------------
+5)uniform
+data = np.random.uniform(low=0, high=1, size=600)
+sns.histplot(data, kde =True, bins =10 )
+plt.show()
+---------------------------------------------------
